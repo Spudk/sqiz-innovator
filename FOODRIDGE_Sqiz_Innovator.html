@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>FOODRIDGE × Sqiz – Innovator 포테이토 품종 소개</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f7;
+      color: #222;
+      line-height: 1.6;
+    }
+    .page-wrapper {
+      max-width: 960px;
+      margin: 32px auto;
+      padding: 24px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .brand-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .brand-logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-logos img {
+      height: 36px;
+      object-fit: contain;
+    }
+    .logo-placeholder {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px dashed #d1d5db;
+      font-size: 11px;
+      color: #6b7280;
+      background: #f9fafb;
+    }
+    .brand-tagline {
+      text-align: right;
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+    .brand-tagline strong {
+      color: #b45309;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      color: #111827;
+      margin-top: 0;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    h3 {
+      font-size: 16px;
+      margin-top: 16px;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background-color: #eef2ff;
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
+    }
+    p, li {
+      font-size: 13px;
+    }
+    .highlight-box {
+      margin: 16px 0;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .highlight-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #4b5563;
+      margin-bottom: 4px;
+    }
+    ul {
+      padding-left: 18px;
+    }
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+    table th, table td {
+      border: 1px solid #e5e7eb;
+      padding: 5px 6px;
+      text-align: left;
+    }
+    table th {
+      background-color: #f3f4f6;
+      font-weight: 600;
+      color: #374151;
+    }
+    .small-note, .footer-note {
+      font-size: 11px;
+      color: #6b7280;
+    }
+    .footer-note {
+      margin-top: 18px;
+      border-top: 1px dashed #e5e7eb;
+      padding-top: 8px;
+    }
+    .product-strip {
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #111827 0%, #1f2933 50%, #4b5563 100%);
+      color: #f9fafb;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .product-strip-main {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .product-strip-sub {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+    .product-strip-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(249,250,251,0.6);
+      background: rgba(249,250,251,0.12);
+      white-space: nowrap;
+    }
+    @media (max-width: 600px) {
+      .page-wrapper {
+        margin: 16px;
+        padding: 16px;
+      }
+      .brand-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .brand-tagline {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="brand-bar">
+      <div class="brand-logos">
+        <!-- 실제 사용 시 아래 src를 FOODRIDGE / Sqiz 로고 파일 경로로 교체하세요 -->
+        <img src="foodridge_logo.png" alt="FOODRIDGE 로고" onerror="this.style.display='none'" />
+        <span class="logo-placeholder">FOODRIDGE 로고 위치</span>
+        <img src="sqiz_logo.png" alt="Sqiz 로고" onerror="this.style.display='none'" />
+        <span class="logo-placeholder">Sqiz 로고 위치</span>
+      </div>
+      <div class="brand-tagline">
+        <strong>FOODRIDGE × Sqiz</strong><br />
+        Innovator 포테이토 기반 프리미엄 프렌치프라이 솔루션
+      </div>
+    </div>
+
+    <header>
+      <h1>Innovator 포테이토 품종 소개</h1>
+      <div class="subtitle">
+        프렌치프라이 및 가공용에 최적화된 Russet 타입 프리미엄 품종
+      </div>
+      <div class="badge-row">
+        <span class="badge">품종명: Innovator</span>
+        <span class="badge">육종사 / 권리자: HZPC (Netherlands)</span>
+        <span class="badge">도입 연도: 1999</span>
+        <span class="badge">주 용도: 프렌치프라이 · 베이킹 · 가공용</span>
+      </div>
+
+      <div class="product-strip">
+        <div>
+          <div class="product-strip-main">Sqiz Innovator Fries</div>
+          <div class="product-strip-sub">
+            Innovator 품종 전용 9&nbsp;mm 코팅 프렌치프라이 &middot; QSR 품질 기준에 맞춘 솔루션
+          </div>
+        </div>
+        <div class="product-strip-tag">
+          High Dry Matter · Long Cut · QSR Quality
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. 개요</h2>
+      <p>
+        Innovator는 네덜란드 HZPC에서 개발한 Russet 껍질의 중생(중간 숙기) 감자 품종으로,
+        <strong>프렌치프라이 및 산업용 가공</strong>에 널리 사용되는 프리미엄 품종입니다.
+        유럽에서 먼저 검증된 후 북미 등지에서 <strong>베이킹 및 프라이용 고급 품종</strong>으로 채택되며
+        전 세계 가공업체와 QSR(Quick Service Restaurant) 체인에서 폭넓게 활용되고 있습니다.
+      </p>
+
+      <div class="highlight-box">
+        <div class="highlight-title">Innovator 품종의 핵심 포인트</div>
+        <ul>
+          <li>건물질(Dry Matter) 약 20.6% &rarr; 프렌치프라이용 프리미엄 구간</li>
+          <li>Specific Gravity 1.081 &rarr; 높은 수율과 바삭한 식감에 유리</li>
+          <li>긴 타원형(Long Oval) 괴경 &rarr; 롱컷 프렌치프라이 생산에 최적화</li>
+          <li>장기 저장 및 재조정(Reconditioning)에 강해 연중 가공·공급에 적합</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 프렌치프라이용으로 적합한 이유</h2>
+
+      <h3>2-1. 고형량과 비중</h3>
+      <p>
+        프렌치프라이 품질은 감자의 <strong>건물질 함량(Dry Matter)</strong>과
+        <strong>Specific Gravity(비중)</strong>에 의해 크게 좌우됩니다.
+        Innovator의 수치는 전 세계 가공업계에서 <strong>프라이용 프리미엄 수준</strong>으로 평가되는 영역입니다.
+      </p>
+      <ul>
+        <li>튀김 후 겉은 바삭, 속은 촉촉한 이상적인 텍스처 형성</li>
+        <li>기름 흡수량 감소로 원가 효율 및 제품 일관성 향상</li>
+        <li>색과 식감이 균일해 프랜차이즈 매장의 품질 관리에 유리</li>
+      </ul>
+
+      <h3>2-2. 롱컷 프라이 생산에 유리한 형상</h3>
+      <p>
+        긴 타원형(Long Oval) 괴경과 큰 사이즈는 9&nbsp;mm, 11&nbsp;mm, 12&nbsp;mm 등
+        다양한 롱컷 규격 생산에 유리하며, 트리밍 손실을 줄여 수율을 높여 줍니다.
+      </p>
+
+      <h3>2-3. 저장 안정성과 재조정</h3>
+      <p>
+        Innovator는 장기 저장 후에도 품질을 재조정할 수 있는 능력이 뛰어나
+        <strong>대형 가공 공장과 프랜차이즈 공급망</strong>에서 선호됩니다.
+      </p>
+      <ul>
+        <li>장기 저장 중에도 건물질과 품질 유지</li>
+        <li>재조정(Reconditioning)을 통해 프라이 가공에 적합한 상태로 맞추기 용이</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. 품종 특성 및 Agronomic 데이터</h2>
+
+      <div class="two-column">
+        <div>
+          <h3>3-1. 괴경 및 지상부</h3>
+          <ul>
+            <li>형태: Long Oval(긴 타원형), Russet 타입 갈색 껍질</li>
+            <li>눈: 얕은 눈(Shallow eyes), 가공 시 손질에 유리</li>
+            <li>육색: 크림색 ~ 연한 노란색</li>
+            <li>초기 생육이 빠르고 줄기 수는 비교적 적음</li>
+            <li>Metribuzin(제초제)에 민감 &rarr; 사용 시 농도·시기 관리 필요</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>3-2. 병해 저항성과 용도</h3>
+          <ul>
+            <li>선충(PCN) Pa2, Pa3에 대한 저항성 보유</li>
+            <li>Wart disease(감자 사마귀병)에 높은 저항성</li>
+            <li>잎·괴경 역병(Leaf &amp; Tuber blight)에 대한 저항성 우수</li>
+            <li>Common scab(더뎅이병)에는 다소 민감할 수 있음</li>
+            <li>프렌치프라이, 웨지, 오븐·에어프라이용, 베이킹 등에 적합</li>
+          </ul>
+        </div>
+      </div>
+
+      <table>
+        <tbody>
+          <tr>
+            <th style="width:30%;">성숙기(Maturity)</th>
+            <td>중생(Medium early)</td>
+          </tr>
+          <tr>
+            <th>휴면(Dormancy)</th>
+            <td>중간</td>
+          </tr>
+          <tr>
+            <th>괴경 수(Number of tubers)</th>
+            <td>주로 9–11개</td>
+          </tr>
+          <tr>
+            <th>건물질(Dry matter)</th>
+            <td>약 20.6%</td>
+          </tr>
+          <tr>
+            <th>전분(Starch)</th>
+            <td>약 14.8%</td>
+          </tr>
+          <tr>
+            <th>UWW / 비중(Specific gravity)</th>
+            <td>UWW 379 / SG 1.081</td>
+          </tr>
+          <tr>
+            <th>조리 타입(Cooking type)</th>
+            <td>B – Slightly mealy (약간 분질성)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="small-note">
+        ※ 수치는 품종 자료와 시험 재배 결과를 기반으로 한 대표값이며, 재배 환경에 따라 달라질 수 있습니다.
+      </p>
+    </section>
+
+    <div class="footer-note">
+      본 자료는 Innovator 품종의 공식 정보와 일반적으로 알려진 가공·재배 특성을
+      기반으로 정리한 요약본입니다. 실제 재배·가공 시에는 각 지역의 재배 지침과
+      공장 조건에 따른 세부 조정이 필요합니다.
+    </div>
+  </div>
+</body>
+</html>
