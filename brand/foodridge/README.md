@@ -49,3 +49,9 @@ pip install fonttools uharfbuzz cairosvg
 python3 tools/build_logo.py Cinzel-SemiBold.ttf NotoSerifKR-SemiBold.ttf
 ```
 폰트는 Google Fonts에서 무료로 받을 수 있습니다.
+
+## 비교안: 기둥 2개 (검토용)
+
+`options/two-tower/`에 기둥이 2개인 전통 현수교 버전이 같은 구성(22개)으로 들어 있습니다. 두 안을 나란히 비교한 이미지는 `options/compare-towers.png`입니다.
+최종안을 정하면 선택한 안을 `svg/`, `png/`에 두고 다른 안은 삭제합니다.
+`python3 tools/build_logo.py <Cinzel> <NotoSerifKR> --towers 2`로 다시 만들 수 있습니다.
