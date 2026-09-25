@@ -50,11 +50,38 @@ def _over(src_rgb, src_a, dst_rgb, dst_a):
     return num / np.maximum(out_a, 1e-6)[..., None], out_a
 
 
-def render(alpha, unit):
-    """alpha: HxW coverage mask. unit: pixels per 'stroke unit' (sets bevel/depth)."""
+def perspective(alpha, near=1.0, far=0.78, squeeze=0.88, lift=0.10):
+    """Side-angle view: the logo turns away to the right like a sign seen from the left.
+
+    near/far: relative height of the left/right edge, squeeze: width kept,
+    lift: how much the right edge rises (fraction of height).
+    """
+    h, w = alpha.shape
+    img = Image.fromarray((alpha * 255).astype(np.uint8), "L")
+    W2 = int(w * squeeze)
+    top_r = h * (1 - far) / 2 - h * lift
+    dst = [(0, 0), (W2, top_r), (W2, top_r + h * far), (0, h * near)]
+    off = -min(0, top_r)
+    dst = [(x, y + off) for x, y in dst]
+    src = [(0, 0), (w, 0), (w, h), (0, h)]
+    rows, rhs = [], []
+    for (X, Y), (x, y) in zip(dst, src):  # PIL wants output -> input mapping
+        rows.append([X, Y, 1, 0, 0, 0, -x * X, -x * Y]); rhs.append(x)
+        rows.append([0, 0, 0, X, Y, 1, -y * X, -y * Y]); rhs.append(y)
+    coeffs = np.linalg.solve(np.array(rows, float), np.array(rhs, float))
+    H2 = int(max(y for _, y in dst)) + 1
+    out = img.transform((W2, H2), Image.PERSPECTIVE, tuple(coeffs), Image.BICUBIC)
+    return np.asarray(out, dtype=float) / 255
+
+
+def render(alpha, unit, extrude=(1.0, 0.35), depth_mul=1.6):
+    """alpha: HxW coverage mask. unit: pixels per 'stroke unit' (sets bevel/depth).
+
+    extrude: (dy, dx) direction the thickness shows per pixel of depth.
+    """
     h, w = alpha.shape
     bevel = 2.2 * unit
-    depth = int(round(1.6 * unit))
+    depth = int(round(depth_mul * unit))
     pad = depth + int(6 * unit)
     a = np.pad(alpha, pad)
     inside = a > 0.5
@@ -89,7 +116,7 @@ def render(alpha, unit):
     side_a = np.zeros_like(a)
     side_rgb = np.zeros(a.shape + (3,)) + SIDE * 0.75
     for k in range(depth, 0, -1):
-        sh = np.roll(np.roll(base, k, 0), int(k * 0.35), 1)
+        sh = np.roll(np.roll(base, int(round(k * extrude[0])), 0), int(round(k * extrude[1])), 1)
         shade = SIDE * (0.75 + 0.25 * (1 - k / depth))
         side_rgb = side_rgb * (1 - sh[..., None]) + shade * sh[..., None]
         side_a = np.maximum(side_a, sh)
@@ -122,6 +149,15 @@ def main():
         img = render(alpha, unit)
         img.save(os.path.join(out, f"foodridge-{name}-3d.png"), optimize=True)
         print("wrote", name)
+
+    # Side-angle 3D (like a metal sign seen from the left): thicker body,
+    # thickness showing on the left/lower faces.
+    for name, width in (("primary", 3000), ("primary-kr", 3000), ("horizontal", 3600)):
+        alpha = perspective(mask_from_svg(os.path.join(src, f"foodridge-{name}-black.svg"), width))
+        unit = width / 3000 * 9
+        img = render(alpha, unit, extrude=(0.55, -1.0), depth_mul=3.2)
+        img.save(os.path.join(out, f"foodridge-{name}-3d-angle.png"), optimize=True)
+        print("wrote", name, "angle")
 
     # 3D app icon: symbol on navy rounded square
     sym = Image.open(os.path.join(out, "foodridge-symbol-3d.png"))
