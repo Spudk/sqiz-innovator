@@ -5,8 +5,7 @@ identical. Text is converted to outlines, so the SVGs open in Illustrator,
 Figma or a browser without the fonts installed.
 
 Usage:
-    python3 build_logo.py <Cinzel-SemiBold.ttf> <NotoSerifKR-SemiBold.ttf> [--towers 2]
-    (--towers 2 writes the two-tower option to ../options/two-tower/)
+    python3 build_logo.py <Cinzel-SemiBold.ttf> <NotoSerifKR-SemiBold.ttf>
 Requires: pip install fonttools uharfbuzz cairosvg
 """
 import os
@@ -64,59 +63,15 @@ def _quad(p, t):
     return u * u * x0 + 2 * u * t * x1 + t * t * x2, u * u * y0 + 2 * u * t * y1 + t * t * y2
 
 
-def _bez_y(p, x):
-    return min((abs(_quad(p, i / 2000)[0] - x), _quad(p, i / 2000)[1]) for i in range(2001))[1]
-
-
 def _cable_y(x):
-    return _bez_y(CABLE_L, x)
+    return min((abs(_quad(CABLE_L, i / 2000)[0] - x), _quad(CABLE_L, i / 2000)[1]) for i in range(2001))[1]
 
 
 def _deck_y(x):
     return _quad(((0, 262), (300, 220), (600, 262)), x / 600)[1]
 
 
-TOWERS = 1  # 1 = single H-tower (primary), 2 = classic two-tower suspension bridge
-
-
-def _tapered(p, w, n=48):
-    """Constant-width fill along quadratic p (approximates a stroked cable)."""
-    pts = [_quad(p, i / n) for i in range(n + 1)]
-    left, right = [], []
-    for i, (x, y) in enumerate(pts):
-        (ax, ay), (bx, by) = pts[max(i - 1, 0)], pts[min(i + 1, n)]
-        dx, dy = bx - ax, by - ay
-        ln = (dx * dx + dy * dy) ** 0.5
-        nx, ny = -dy / ln * w / 2, dx / ln * w / 2
-        left.append(f"{x + nx:.1f} {y + ny:.1f}")
-        right.append(f"{x - nx:.1f} {y - ny:.1f}")
-    return "M" + " L".join(left + right[::-1]) + "Z"
-
-
-def _two_tower_symbol(fill):
-    towers, cables, hangers = [], [], []
-    for c in (170, 430):
-        towers.append(f"M{c - 16} 48h12v230h-12z M{c + 4} 48h12v230h-12z"
-                      f" M{c - 20} 38h40v11h-40z M{c - 4} 48h8v14h-8z M{c - 4} 128h8v9h-8z")
-    main = ((170, 50), (300, 404), (430, 50))
-    side_l = ((170, 50), (112, 206), (18, 235))
-    side_r = tuple((SYM_W - x, y) for x, y in side_l)
-    for p in (main, side_l, side_r):
-        cables.append(_tapered(p, 6))
-    for p, xs in ((main, (206, 238, 270, 300, 330, 362, 394)),
-                  (side_l, (134, 98, 62)), (side_r, (466, 502, 538))):
-        for x in xs:
-            top, bot = _bez_y(p, x) + 2, _deck_y(x) + 1
-            if bot - top > 3:
-                hangers.append(f"M{x - 2:.1f} {top:.1f}H{x + 2:.1f}V{bot:.1f}H{x - 2:.1f}Z")
-    deck = "M0 262 Q300 220 600 262 Q300 240 0 262Z"
-    return (f'<g fill="{fill}"><path d="{" ".join(towers)}"/><path d="{" ".join(cables)}"/>'
-            f'<path d="{" ".join(hangers)}"/><path d="{deck}"/></g>')
-
-
 def bridge_symbol(fill):
-    if TOWERS == 2:
-        return _two_tower_symbol(fill)
     tower = "M281 28h14v250h-14z M305 28h14v250h-14z M277 18h46v12h-46z M295 112h10v10h-10z"
     cables = ("M288 30 Q205 214 18 232 L18 238 Q212 224 292 36Z"
               " M312 30 Q395 214 582 232 L582 238 Q388 224 308 36Z")
@@ -210,20 +165,15 @@ def build(cinzel, noto):
         + f'<g transform="translate({512 - word_w * 0.3 / 2:.2f} {330 + 262 * 650 / SYM_W + 60 + cap * 0.3:.2f}) scale(0.3)">'
           f'<path fill="{GOLD_LIGHT}" d="{word_d}"/></g>')
 
-    out = OUT if TOWERS == 1 else os.path.join(OUT, "options", "two-tower")
     for sub in ("svg", "png"):
-        os.makedirs(os.path.join(out, sub), exist_ok=True)
+        os.makedirs(os.path.join(OUT, sub), exist_ok=True)
     for name, data in files.items():
-        with open(os.path.join(out, "svg", name), "w", encoding="utf-8") as fh:
+        with open(os.path.join(OUT, "svg", name), "w", encoding="utf-8") as fh:
             fh.write(data)
-        cairosvg.svg2png(bytestring=data.encode(), write_to=os.path.join(out, "png", name[:-4] + ".png"),
+        cairosvg.svg2png(bytestring=data.encode(), write_to=os.path.join(OUT, "png", name[:-4] + ".png"),
                          output_width=2000 if "icon" not in name and "sns" not in name else 1024)
     print(f"wrote {len(files)} logos (svg + png)")
 
 
 if __name__ == "__main__":
-    if "--towers" in sys.argv:
-        i = sys.argv.index("--towers")
-        TOWERS = int(sys.argv.pop(i + 1))
-        sys.argv.pop(i)
     build(sys.argv[1], sys.argv[2])

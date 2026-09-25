@@ -19,6 +19,15 @@ SVG 안의 글자는 모두 **아웃라인(패스)으로 변환**되어 있어 I
 
 `svg/`는 편집용 원본, `png/`는 바로 쓸 수 있는 고해상도 이미지(가로 2000px, 투명 배경)입니다.
 
+### 3D 버전 (`3d/`)
+
+금속 질감의 입체 금색 버전입니다. 빛은 왼쪽 위에서 들어오고, 모서리 베벨, 두께감, 부드러운 그림자가 들어 있습니다.
+기본형, 기본형 + 국문, 가로형, 심볼, 워드마크, 앱 아이콘이 있으며 모두 투명 배경 PNG(가로 3000px 이상)입니다.
+
+- **3D 사용처**: 간판, 매장 인테리어, 홍보 영상, 프레젠테이션 표지, SNS 이미지처럼 크게 보여주는 곳
+- **평면 사용처**: 명함, 서류, 패키지 인쇄, 웹사이트 헤더, 작은 크기 (3D 효과는 작아지면 뭉개짐)
+- 3D 버전은 이미지 파일이라 직접 편집할 수 없습니다. 수정은 `svg/` 원본을 고친 뒤 `tools/render_3d.py`로 다시 만듭니다.
+
 ## 색상
 
 | 이름 | HEX | RGB | CMYK (근사치) |
@@ -47,11 +56,7 @@ CMYK 값은 RGB에서 계산한 근사치입니다. 인쇄소에서 교정 인�
 ```bash
 pip install fonttools uharfbuzz cairosvg
 python3 tools/build_logo.py Cinzel-SemiBold.ttf NotoSerifKR-SemiBold.ttf
+pip install numpy scipy pillow
+python3 tools/render_3d.py   # 3D 버전 (svg/ 원본을 읽음)
 ```
 폰트는 Google Fonts에서 무료로 받을 수 있습니다.
-
-## 비교안: 기둥 2개 (검토용)
-
-`options/two-tower/`에 기둥이 2개인 전통 현수교 버전이 같은 구성(22개)으로 들어 있습니다. 두 안을 나란히 비교한 이미지는 `options/compare-towers.png`입니다.
-최종안을 정하면 선택한 안을 `svg/`, `png/`에 두고 다른 안은 삭제합니다.
-`python3 tools/build_logo.py <Cinzel> <NotoSerifKR> --towers 2`로 다시 만들 수 있습니다.
