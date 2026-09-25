@@ -21,14 +21,14 @@ SVG 안의 글자는 모두 **아웃라인(패스)으로 변환**되어 있어 I
 
 ### 3D 버전 (`3d/`)
 
-금속 질감의 입체 금색 버전입니다. 빛은 왼쪽 위에서 들어오고, 모서리 베벨, 두께감, 부드러운 그림자가 들어 있습니다.
-기본형, 기본형 + 국문, 가로형, 심볼, 워드마크, 앱 아이콘이 있으며 모두 투명 배경 PNG(가로 3000px 이상)입니다.
+3D 프로그램(Blender)에서 로고를 두께가 있는 금속 물체로 만들어 조명과 카메라로 촬영한 이미지입니다. 둥글게 다듬은 모서리, 옆면 두께, 금속 반사가 실제 물체처럼 표현됩니다.
+기본형, 기본형 + 국문, 가로형, 심볼, 워드마크, 앱 아이콘이 있으며 모두 투명 배경 PNG(가로 3000px)입니다.
 
-**측면 각도 버전** (`*-3d-angle.png`): 금속 간판을 왼쪽에서 비스듬히 본 모습입니다. 오른쪽으로 갈수록 멀어지는 원근감이 있고, 두께가 옆면으로 드러납니다. 기본형, 기본형 + 국문, 가로형으로 제공합니다. 광고 비주얼, 영상 오프닝, 매장 사인 시안처럼 역동적인 느낌이 필요한 곳에 씁니다.
+**측면 각도 버전** (`*-3d-angle.png`): 금속 간판을 약 18° 옆에서 본 모습입니다. 왼쪽이 가깝고 오른쪽으로 멀어지는 원근감이 있습니다. 기본형, 기본형 + 국문, 가로형으로 제공합니다. 광고 비주얼, 영상 오프닝, 매장 사인 시안처럼 역동적인 느낌이 필요한 곳에 씁니다.
 
 - **3D 사용처**: 간판, 매장 인테리어, 홍보 영상, 프레젠테이션 표지, SNS 이미지처럼 크게 보여주는 곳
 - **평면 사용처**: 명함, 서류, 패키지 인쇄, 웹사이트 헤더, 작은 크기 (3D 효과는 작아지면 뭉개짐)
-- 3D 버전은 이미지 파일이라 직접 편집할 수 없습니다. 수정은 `svg/` 원본을 고친 뒤 `tools/render_3d.py`로 다시 만듭니다.
+- 3D 버전은 이미지 파일이라 직접 편집할 수 없습니다. 수정은 `svg/` 원본을 고친 뒤 `tools/render_all_3d.sh`로 다시 만듭니다.
 
 ## 색상
 
@@ -58,7 +58,8 @@ CMYK 값은 RGB에서 계산한 근사치입니다. 인쇄소에서 교정 인�
 ```bash
 pip install fonttools uharfbuzz cairosvg
 python3 tools/build_logo.py Cinzel-SemiBold.ttf NotoSerifKR-SemiBold.ttf
-pip install numpy scipy pillow
-python3 tools/render_3d.py   # 3D 버전 (svg/ 원본을 읽음)
+pip install bpy skia-pathops pillow   # bpy = Blender (Python 3.11)
+sh tools/render_all_3d.sh            # 3D 버전 전체 (svg/ 원본을 읽음, 4코어 기준 30~40분)
+python3 tools/render_blender.py svg/foodridge-primary-black.svg out.png --angle 18   # 한 장만, 각도 지정
 ```
 폰트는 Google Fonts에서 무료로 받을 수 있습니다.
